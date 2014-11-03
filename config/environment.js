@@ -2,7 +2,8 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'ember-inheritance-and-polymorphism',
+    modulePrefix: 'ember-inherit-polymorph',
+    firebase: 'https://ember-inherit-polymorph.firebaseio.com/',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',

@@ -1,3 +1,28 @@
-<h2 id='title'>Welcome to Ember.js</h2>
+<div class="container">
+	<h2 id='title'>Ember Inheritance and Polymorphism</h2>
+	<div class="row">
+		<div class="col-md-4">
+			{{#bs-button type="primary" clicked="seed"}}Seed Database{{/bs-button}}
+			{{#if session.isAuthenticated}}
+      	<span><b>User:</b> {{session.currentUser.firstName}} <b>Role:</b> {{session.currentUser.role}}</span>
+        {{bs-button title="Logout" clicked="invalidateSession"}}
+      {{else}}
+      	{{bs-button title="Login" clicked="authenticateSession"}}
+      {{/if}}
+		</div>
+	</div>
 
-{{outlet}}
+{{!-- 	<div class="row">
+		<div class="col-md-4">
+			<h3>Users</h3>
+			<ul class="list-group">
+				{{#each user in model}}
+					<li class="list-group-item">{{user.name}} {{user.email}} {{user.password}}</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div> --}}
+
+	{{outlet}}
+
+</div>
