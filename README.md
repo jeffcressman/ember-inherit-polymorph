@@ -6,6 +6,14 @@ The questions we're exploring here are
 2. If we have a single user record type then we solve the above problem but we want different user types so we'll try that using polymorphism. 
 3. There are some known issues with ember-cli and polymorphism. Will we hit any of these issues?
 
+Argggh!
+
+Polymorphism and Firebase don't seem ready for prime time.
+
+Adding the profile to the user object is causing problems and what we want is to set up the current user when someone signs in by taking the Firebase login email that is returned on successful authentication, looking up the corresponding user and having its profile loaded.
+
+Presumably we could hack around the issue for now by simply adding the profile type and profile id to the user and load the profile as needed, which means we're not really using polymorphism at all then.
+
 ## Ember-cli and Polymorphism
 
 See <https://github.com/emberjs/data/issues/2065> on needing to switch `Ember.MODEL_FACTORY_INJECTIONS = true` to `Ember.MODEL_FACTORY_INJECTIONS = false`
@@ -49,6 +57,8 @@ Some more stuff on polymorphic relationships:
 
 <http://discuss.emberjs.com/t/ember-data-relationships-like-polymorphic-async-inverse-embedded/5029>
 
+<http://www.codingepiphany.com/2014/08/18/simplistic-explanation-emberdata-polymorphism/>
+
 ### Weird Firebase stuff
 
 https://github.com/firebase/emberFire/issues/42
@@ -56,6 +66,19 @@ https://github.com/firebase/emberFire/issues/42
 And on the proper way to save objects with hasMany <http://stackoverflow.com/questions/22876229/saving-relationships-in-ember-js-and-emberfire>
 
 This is basically saying that Ember Data updates belongsTo and hasMany relationships on the belongsTo side: <https://github.com/emberjs/data/commit/7f752ad15eb9b9454e3da3f4e0b8c487cdc70ff0#commitcomment-4923439> So, if I create a profile its saving the profile that really handles the relationship.
+
+### Ember Data async issue
+
+Need to jump up to canary version for async fix: http://stackoverflow.com/questions/26086667/ember-data-cannot-read-property-async-of-undefined
+
+Yep, that fixed our ability to save a record that had an async relationship to Firebase.
+
+### Saving Polymorphic records
+
+``` javascript
+// app/app.js
+Ember.MODEL_FACTORY_INJECTIONS = false; // !!! Polymorphic relationships don't save if this set to true
+```
 
 ## Setup
 
